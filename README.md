@@ -1,7 +1,8 @@
-# side_projects
-Just some one-file applications for personal projects
+# Side Projects
+Just a collection of some more or less interesting one-file applications for personal projects.
 
-Currently I published the following files in this repository.
+
+Currently I published the following files in this repository:
 
 ## 1 Codeforces / Competitive Programming Template in CPP
 
