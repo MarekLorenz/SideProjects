@@ -1,25 +1,22 @@
 from bs4 import BeautifulSoup
-import requests
-from tkinter import *
-import webbrowser
-from time import sleep
-from tkinter import Tk
+import urllib3
 
-def rankbot_activation():
-    try:
-        u = Username.get()
-        name = "https://euw.op.gg/summoner/userName=" + u
-        source = requests.get(name, "lxml").text
-        soup = BeautifulSoup(source, "html.parser")
-        lp = soup.find("span", {"class": "LeaguePoints"}).getText()
-        rank = soup.find("div", {"class": "TierRank"}).getText()
-        print(str(rank).replace("\t", ""), str(lp).replace("\t", ""))
-    except:
-        print("There is no account of this name or the summoner is unranked")
-master = Tk()
-Label(master, text="Username").grid(row=0)
-Username = Entry(master)
-Username.grid(row=0, column=1)
-Button(master, text='Quit', command=master.quit).grid(row=1, column=0, sticky=W, pady=4)
-Button(master, text='Activate webbot', command=rankbot_activation).grid(row=1, column=1, sticky=W, pady=4)
-mainloop()
+def retrieve_rank(server, username):
+    
+    url = f"https://www.op.gg/summoners/{server.lower()}/{username}"
+    http = urllib3.PoolManager()
+    response = http.request('GET', url, decode_content=True)
+    reply = response.data
+
+    soup = BeautifulSoup(reply, 'html.parser')
+    tier = soup.find("div", {"class": "tier"}).contents[0]
+    lp = soup.find("div", {"class": "lp"}).contents[0]
+
+    print(tier)
+    print(f"{lp} lp")
+
+# example usage
+# retrieve_rank('na', 'Pobelter-NA1')
+# retrieve_rank('na', 'Katevolved-666')
+# retrieve_rank('euw', 'Don Noway-EUW')
+# retrieve_rank('kr', 'Hide on Bush-KR1')
