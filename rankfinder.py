@@ -1,6 +1,14 @@
 from bs4 import BeautifulSoup
 import urllib3
 
+"""
+        Parameters
+        ----------
+        server : str
+            The server abreviation as used in the op gg url -> "euw", "na", "kr" etc.
+        username : str
+            The username and the Riot tag seperated by a "-" -> "your_name-Riot_tag"
+"""
 def retrieve_rank(server, username):
     
     url = f"https://www.op.gg/summoners/{server.lower()}/{username}"
